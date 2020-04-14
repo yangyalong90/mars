@@ -1,0 +1,9 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    url: jdbc:mysql://47.105.77.138:3306/libary?useUnicode=true&characterEncoding=UTD-8
+    driver-class-name:
+    username: root
+    password: password
