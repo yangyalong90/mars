@@ -40,13 +40,7 @@ public class CustomRealm extends AuthorizingRealm {
         String ticket = (String) principals.getPrimaryPrincipal();
 
         JwtOperator operator = JwtOperatorBuilder.build();
-        ShiroUserDetail userDetail;
-        try {
-            userDetail = (ShiroUserDetail) operator.parse(ticket);
-        }catch (TokenExpiredException e){
-            e.printStackTrace();
-            throw new AuthorizationException();
-        }
+        ShiroUserDetail userDetail = (ShiroUserDetail) operator.parse(ticket);
 
         List<String> permissions = userDetail.getPermissions();
 

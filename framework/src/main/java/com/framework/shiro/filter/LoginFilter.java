@@ -51,6 +51,7 @@ public class LoginFilter extends AccessControlFilter {
         map.put("user", userDetail);
 
         HttpServletResponse httpResponse = (HttpServletResponse) response;
+        httpResponse.setContentType("application/json");
         response.getWriter().write(JSONObject.toJSONString(map));
 
         return false;

@@ -6,6 +6,6 @@ public interface JwtOperator {
 
     boolean verify(String token);
 
-    TokenUser parse(String token) throws TokenExpiredException;
+    TokenUser parse(String token);
 
 }

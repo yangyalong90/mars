@@ -57,14 +57,14 @@ class JwtOperatorHandle implements JwtOperator {
 
         try {
             Jwts.parser().setSigningKey(base64EncodeSecretKey).parse(token);
-        }catch (ExpiredJwtException e){
+        } catch (ExpiredJwtException e) {
             return false;
         }
 
         return true;
     }
 
-    public TokenUser parse(String token) throws TokenExpiredException {
+    public TokenUser parse(String token) {
 
         Claims claims;
         try {
@@ -72,7 +72,7 @@ class JwtOperatorHandle implements JwtOperator {
                     .setSigningKey(base64EncodeSecretKey)
                     .parse(token)
                     .getBody();
-        }catch (ExpiredJwtException e){
+        } catch (ExpiredJwtException e) {
             throw new TokenExpiredException();
         }
 
