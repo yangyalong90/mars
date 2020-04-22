@@ -54,6 +54,8 @@ public class LoginFilter extends AccessControlFilter {
         httpResponse.setContentType("application/json");
         response.getWriter().write(JSONObject.toJSONString(map));
 
+        System.out.println("111");
+
         return false;
     }
 }
