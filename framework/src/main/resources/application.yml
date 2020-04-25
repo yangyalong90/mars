@@ -14,3 +14,15 @@ system:
 #    password: password
 #    type: com.alibaba.druid.pool.DruidDataSource
 
+spring:
+  redis:
+    database: 0
+    host: 47.105.77.138
+    port: 6379
+    password:
+
+redisson:
+  address: redis://${spring.redis.host}:${spring.redis.port}
+  password: ${spring.redis.password}
+
+

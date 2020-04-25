@@ -37,6 +37,10 @@ public class JwtFilter extends AccessControlFilter {
 
         String token = servletRequest.getHeader(TOKEN_HEADER);
 
+        if (token == null || "".equals(token)){
+            return true;
+        }
+
         // todo 验证 token 的有效性
 
         JwtToken jwtToken = new JwtToken(token);

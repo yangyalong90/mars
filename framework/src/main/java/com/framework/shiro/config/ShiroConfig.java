@@ -5,6 +5,8 @@ import com.framework.shiro.filter.LoginFilter;
 import com.framework.shiro.realm.CustomRealm;
 import com.framework.shiro.service.LoginService;
 import com.framework.shiro.user.ShiroUserDetail;
+import org.aopalliance.aop.Advice;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.mgt.*;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -19,8 +21,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.AnnotationUtils;
 
 import javax.servlet.Filter;
+import java.lang.reflect.Method;
 import java.util.*;
 
 @Configuration
@@ -47,10 +51,10 @@ public class ShiroConfig {
 
 //        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
 //        // <!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
-////        filterChainDefinitionMap.put("/api/**", "perms[*]");
+//        filterChainDefinitionMap.put("/api/**", "perms[*]");
 //
 //        //主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截 剩余的都需要认证
-////        filterChainDefinitionMap.put("/**", "perms[*]");
+//        filterChainDefinitionMap.put("/**", "perms[*]");
 
 //        factoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
@@ -111,7 +115,7 @@ public class ShiroConfig {
      */
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(){
-        return new AuthorizationAttributeSourceAdvisor();
+        return new AuthorizationAttributeSourceAdvisor_();
     }
 
     @Bean
@@ -133,6 +137,24 @@ public class ShiroConfig {
             // 这里禁止创建session
             context.setSessionCreationEnabled(false);
             return super.createSubject(context);
+        }
+    }
+
+    class AuthorizationAttributeSourceAdvisor_ extends AuthorizationAttributeSourceAdvisor {
+
+        @Override
+        public boolean matches(Method method, Class targetClass) {
+
+//            RequiresPermissions permissions = AnnotationUtils.findAnnotation(method, RequiresPermissions.class);
+//
+//            return permissions == null ? false : super.matches(method, targetClass);
+
+            return super.matches(method, targetClass);
+        }
+
+        @Override
+        public void setAdvice(Advice advice) {
+            super.setAdvice(advice);
         }
     }
 
