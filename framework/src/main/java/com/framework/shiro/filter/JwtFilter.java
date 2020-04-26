@@ -31,20 +31,23 @@ public class JwtFilter extends AccessControlFilter {
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
 
-        // todo
+        //
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         HttpServletRequest servletRequest = (HttpServletRequest) request;
 
         String token = servletRequest.getHeader(TOKEN_HEADER);
 
+        // 未携带 token 时，交给 shiro 判断 是否为放开权限接口（游客可访问接口）
+        // 如果 当前接口需要权限访问，而又未携带 token ，shiro 会抛出 AuthorizationException，需处理此异常
+        // 如果不返回 true ，则所有的 url 都需要携带 token 进行权限校验
         if (token == null || "".equals(token)){
             return true;
         }
 
-        // todo 验证 token 的有效性
-
+        // 验证 token 的有效性
         JwtToken jwtToken = new JwtToken(token);
         try {
+            // 权限认证
             getSubject(request, response).login(jwtToken);
         }catch (Exception e){
             e.printStackTrace();

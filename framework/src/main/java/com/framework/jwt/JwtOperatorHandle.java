@@ -31,10 +31,6 @@ class JwtOperatorHandle implements JwtOperator {
         base64EncodeSecretKey = Base64.getEncoder().encode(ENCODE_SECRET_KEY.getBytes());
     }
 
-//    public JwtOperatorHandle(SignatureAlgorithm algorithm) {
-//        this.algorithm = algorithm;
-//    }
-
     public String token(TokenUser user) {
 
         Date now = new Date();

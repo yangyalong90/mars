@@ -49,15 +49,6 @@ public class ShiroConfig {
         factoryBean.setLoginUrl(properties.getLogin());
         factoryBean.setSecurityManager(securityManager);
 
-//        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-//        // <!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
-//        filterChainDefinitionMap.put("/api/**", "perms[*]");
-//
-//        //主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截 剩余的都需要认证
-//        filterChainDefinitionMap.put("/**", "perms[*]");
-
-//        factoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
-
         // 注册jwt拦截器
         Map<String, Filter> filterMap = new HashMap<>();
         filterMap.put("jwt", new JwtFilter());
@@ -115,7 +106,7 @@ public class ShiroConfig {
      */
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(){
-        return new AuthorizationAttributeSourceAdvisor_();
+        return new AuthorizationAttributeSourceAdvisor();
     }
 
     @Bean
@@ -125,7 +116,7 @@ public class ShiroConfig {
             ShiroUserDetail shiroUserDetail = new ShiroUserDetail();
             shiroUserDetail.setUsername(loginUser.getUsername());
             List<String> permissions = new ArrayList<>();
-            permissions.add("api:abc");
+            permissions.add("api:u2");
             shiroUserDetail.setPermissions(permissions);
             return shiroUserDetail;
         };
@@ -137,24 +128,6 @@ public class ShiroConfig {
             // 这里禁止创建session
             context.setSessionCreationEnabled(false);
             return super.createSubject(context);
-        }
-    }
-
-    class AuthorizationAttributeSourceAdvisor_ extends AuthorizationAttributeSourceAdvisor {
-
-        @Override
-        public boolean matches(Method method, Class targetClass) {
-
-//            RequiresPermissions permissions = AnnotationUtils.findAnnotation(method, RequiresPermissions.class);
-//
-//            return permissions == null ? false : super.matches(method, targetClass);
-
-            return super.matches(method, targetClass);
-        }
-
-        @Override
-        public void setAdvice(Advice advice) {
-            super.setAdvice(advice);
         }
     }
 

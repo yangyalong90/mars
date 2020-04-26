@@ -44,8 +44,8 @@ public class CustomRealm extends AuthorizingRealm {
 
         List<String> permissions = userDetail.getPermissions();
 
-        // todo 获取当前用户信息
-        // todo 判断权限
+        // 获取当前用户信息
+        // 判断权限
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.setStringPermissions(permissions == null ? null : permissions.stream().collect(Collectors.toSet()));
 
