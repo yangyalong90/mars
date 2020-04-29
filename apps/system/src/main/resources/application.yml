@@ -8,6 +8,8 @@ system:
     login: /login
     logout: /logout
 mybatis-plus:
+  configuration:
+    cache-enabled: true
   mapper-locations:
     - classpath:mappers/*.xml
 spring:

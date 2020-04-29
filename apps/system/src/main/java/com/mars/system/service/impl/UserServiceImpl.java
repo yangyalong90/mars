@@ -7,6 +7,8 @@ import com.mars.system.dao.UserMapper;
 import com.mars.system.dao.UserPermissionMapper;
 import com.mars.system.entity.UserEntity;
 import com.mars.system.entity.UserPermissionEntity;
+import com.mars.system.model.LoginUserInfo;
+import com.mars.system.model.UserInfo;
 import com.mars.system.service.UserService;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +29,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity queryUser(String username) {
-        return userMapper.selectOne(new QueryWrapper<UserEntity>().lambda().eq(UserEntity::getUsername, username));
+    public UserEntity queryUser(String userId) {
+
+        UserInfo userInfo = userMapper.queryUserInfo(userId);
+
+        return userInfo;
+    }
+
+    @Override
+    public void updateUser(UserEntity userEntity) {
+        userMapper.updateById(userEntity);
     }
 
     @Override
@@ -52,8 +62,9 @@ public class UserServiceImpl implements UserService {
                 .lambda()
                 .eq(UserPermissionEntity::getUserId, userEntity.getId()));
 
-        ShiroUserDetail userDetail = new ShiroUserDetail();
+        LoginUserInfo userDetail = new LoginUserInfo();
         userDetail.setUsername(username);
+        userDetail.setId(userEntity.getId());
 
         userDetail.setPermissions(userPermissionEntities.stream().map(UserPermissionEntity::getPermission).collect(Collectors.toList()));
 

@@ -5,6 +5,8 @@ import com.mars.system.entity.UserEntity;
 
 public interface UserService extends LoginService {
 
-    UserEntity queryUser(String username);
+    UserEntity queryUser(String userId);
+
+    void updateUser(UserEntity userEntity);
 
 }
