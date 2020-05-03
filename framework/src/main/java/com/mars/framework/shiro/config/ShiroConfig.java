@@ -111,11 +111,11 @@ public class ShiroConfig {
         return new AuthorizationAttributeSourceAdvisor();
     }
 
-    @Bean
-    @ConditionalOnMissingBean
-    public ShiroExceptionHandler shiroExceptionHandler(ExceptionResultParse resultParse) {
-        return new ShiroExceptionHandler(resultParse);
-    }
+//    @Bean
+//    @ConditionalOnMissingBean
+//    public ShiroExceptionHandler shiroExceptionHandler(ExceptionResultParse resultParse) {
+//        return new ShiroExceptionHandler(resultParse);
+//    }
 
     @Bean
     @ConditionalOnMissingBean(ExceptionResultParse.class)

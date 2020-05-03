@@ -39,6 +39,7 @@ spring:
       ack-mode: MANUAL_IMMEDIATE
       # 在侦听器容器中运行的线程数。
       concurrency: 5
+      missing-topics-fatal: false
 
   redis:
     database: 0

@@ -4,6 +4,7 @@ import com.mars.common.model.ApiResult;
 import com.mars.system.entity.UserEntity;
 import com.mars.system.service.UserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -11,9 +12,11 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private UserService userService;
+    private KafkaTemplate<String, String> kafkaTemplate;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, KafkaTemplate<String, String> kafkaTemplate) {
         this.userService = userService;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     @RequiresPermissions("sys:user:query")
@@ -29,5 +32,14 @@ public class UserController {
         userService.updateUser(userEntity);
         return ApiResult.success();
     }
+
+    @GetMapping("/other/kafka")
+    @ResponseBody
+    public ApiResult kafka(){
+        kafkaTemplate.send("TOPIC_INSERT", "1");
+        kafkaTemplate.send("TOPIC_UPDATE", "1");
+        return ApiResult.success();
+    }
+
 
 }
