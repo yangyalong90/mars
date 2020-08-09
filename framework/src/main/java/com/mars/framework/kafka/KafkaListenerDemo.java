@@ -25,7 +25,7 @@ public class KafkaListenerDemo {
         this.weakRefHashLock = weakRefHashLock;
     }
 
-    @KafkaListener(topics = "TOPIC_INSERT")
+//    @KafkaListener(topics = "TOPIC_INSERT", topicPattern = "0")
     public void insert(ConsumerRecord<String, String> record, Acknowledgment acknowledgment) throws InterruptedException{
         // 模拟顺序异常，也就是insert后消费，这里线程sleep
         Thread.sleep(1000);
@@ -50,7 +50,7 @@ public class KafkaListenerDemo {
         acknowledgment.acknowledge();
     }
 
-    @KafkaListener(topics = "TOPIC_UPDATE")
+//    @KafkaListener(topics = "TOPIC_UPDATE")
     public void update(ConsumerRecord<String, String> record, Acknowledgment acknowledgment) throws InterruptedException{
 
         String id = record.value();

@@ -46,6 +46,8 @@ spring:
     host: 47.105.77.138
     port: 6379
     password:
+  application:
+    name: system
 
 redisson:
   address: redis://${spring.redis.host}:${spring.redis.port}

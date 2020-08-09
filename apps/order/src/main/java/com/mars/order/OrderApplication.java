@@ -1,4 +1,4 @@
-package com.mars.system;
+package com.mars.order;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,14 +7,11 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class SystemApplication {
+public class OrderApplication {
 
-    public static void main(String[] args) throws Exception {
-
-        ConfigurableApplicationContext context = SpringApplication.run(SystemApplication.class, args);
-
-        System.out.println("system 启动成功");
-
+    public static void main(String[] args) {
+        ConfigurableApplicationContext applicationContext = SpringApplication.run(OrderApplication.class, args);
+        System.out.println("order success");
     }
 
 }
